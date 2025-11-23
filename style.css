@@ -4,33 +4,49 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-/* Animation Keyframes */
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
+/* Float up animation (Love/Celebration) */
 @keyframes fly {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    0% { 
+        transform: translateY(0) rotate(0deg) scale(0.8); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(-120vh) rotate(360deg) scale(1.2); 
+        opacity: 0; 
+    }
 }
 
+/* Fall down animation (Sad/Rain) */
 @keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
-
-/* Custom classes applied via JS for animations */
-.animate-float {
-    animation: float 6s ease-in-out infinite;
+    0% { 
+        transform: translateY(-10vh) rotate(0deg); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(110vh) rotate(20deg); 
+        opacity: 0; 
+    }
 }
 
 .animate-fly {
-    animation: fly 10s linear infinite;
+    animation: fly 15s linear infinite;
 }
 
 .animate-fall {
-    animation: fall 10s linear infinite;
+    animation: fall 8s linear infinite;
+}
+
+.animate-in {
+    animation: popIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }

@@ -23,10 +23,15 @@ const App: React.FC = () => {
     triggerConfetti();
   };
 
+  const handleReset = () => {
+    setYesPressed(false);
+    setNoCount(0);
+  };
+
   const triggerConfetti = () => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 50 };
 
     const randomInRange = (min: number, max: number) => {
       return Math.random() * (max - min) + min;
@@ -71,14 +76,16 @@ const App: React.FC = () => {
     bgClass = 'bg-gradient-to-br from-pink-200 to-purple-200';
   } else if (noCount > 0) {
     mood = 'sad';
-    bgClass = 'bg-slate-200';
+    // Dark grey for sad/rainy mood
+    bgClass = 'bg-slate-600'; 
   }
 
   return (
     <div className={`min-h-screen ${bgClass} flex flex-col items-center justify-center overflow-hidden selection:bg-rose-200 transition-colors duration-700`}>
+      {/* Background Animation */}
       <FloatingHearts mode={mood} />
       
-      <div className="z-10 w-full max-w-md p-4 text-center">
+      <div className="z-10 w-full max-w-md p-4 text-center relative">
         {yesPressed ? (
           <div className="animate-in fade-in zoom-in duration-700 flex flex-col items-center gap-6">
             <div className="relative">
@@ -97,7 +104,7 @@ const App: React.FC = () => {
               <h1 className="text-4xl md:text-5xl font-extrabold text-pink-600 tracking-tight drop-shadow-sm">
                 Yay! Hanae said YES! 
               </h1>
-              <div className="text-lg text-gray-600 font-medium font-serif italic leading-relaxed">
+              <div className="text-lg text-gray-700 font-medium font-serif italic leading-relaxed">
                 "My heart is yours, forever and true,<br/>
                  I can't wait to spend my life with you." ❤️<br/>
                  <span className="block mt-2 text-pink-500 font-semibold not-italic">- Love, Yassir</span>
@@ -109,6 +116,13 @@ const App: React.FC = () => {
                     You accepted, so send me a kiss on WhatsApp! 😘
                 </p>
             </div>
+
+            <button
+              onClick={handleReset}
+              className="mt-4 px-8 py-2 bg-white text-pink-500 font-bold rounded-full shadow-lg hover:bg-pink-50 hover:scale-105 transition-all duration-300 opacity-80 hover:opacity-100"
+            >
+              Replay ↺
+            </button>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-8">
@@ -124,14 +138,14 @@ const App: React.FC = () => {
               />
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 drop-shadow-sm px-4">
+            <h1 className={`text-4xl md:text-5xl font-extrabold drop-shadow-sm px-4 transition-colors duration-300 ${noCount > 0 ? 'text-white' : 'text-gray-800'}`}>
               Hanae, will you be my wife?
             </h1>
 
             <div className="flex flex-wrap justify-center items-center gap-4 w-full min-h-[100px]">
               <button
-                className="bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-green-200 z-20"
-                style={{ fontSize: yesButtonSize, padding: '0.5em 1em' }}
+                className="bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-green-200 z-20 whitespace-nowrap"
+                style={{ fontSize: yesButtonSize, padding: '12px 24px' }}
                 onClick={handleYesClick}
               >
                 Yes
@@ -147,10 +161,6 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
-      
-      <footer className="fixed bottom-2 w-full text-center text-rose-300 text-xs font-semibold tracking-wider opacity-60 pointer-events-none">
-         MADE WITH LOVE & REACT
-      </footer>
     </div>
   );
 };
